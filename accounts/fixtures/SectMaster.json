@@ -4,7 +4,15 @@
         "pk": 0,
         "fields": {
             "pms_value": 0,
-            "name": "-"
+            "name": "未設定"
+        }
+    },
+    {
+        "model": "accounts.SectMaster",
+        "pk": 1,
+        "fields": {
+            "pms_value": 0,
+            "name": "所属室無し"
         }
     }
 ]

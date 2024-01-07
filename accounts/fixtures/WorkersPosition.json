@@ -3,7 +3,7 @@
         "model": "accounts.WorkersPosition",
         "pk": 0,
         "fields": {
-            "name": "不明"
+            "name": "未設定"
         }
     },
     {
@@ -53,6 +53,20 @@
         "pk": 7,
         "fields": {
             "name": "役員"
+        }
+    },
+    {
+        "model": "accounts.WorkersPosition",
+        "pk": 8,
+        "fields": {
+            "name": "非正規"
+        }
+    },
+    {
+        "model": "accounts.WorkersPosition",
+        "pk": 9,
+        "fields": {
+            "name": "非正規(リーダー)"
         }
     }
 ]

@@ -4,7 +4,15 @@
         "pk": 0,
         "fields": {
             "pms_value": 0,
-            "name": "不明"
+            "name": "未設定"
+        }
+    },
+    {
+        "model": "accounts.DeptMaster",
+        "pk": 1,
+        "fields": {
+            "pms_value": 0,
+            "name": "所属部署無し"
         }
     }
 ]

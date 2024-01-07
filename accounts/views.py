@@ -15,7 +15,6 @@ class LoginView(BaseLoginView):
 class LogoutView(BaseLogoutView):
     pass
 
-
 class PasswordChange(LoginRequiredMixin, PasswordChangeView):
     form_class = SetPasswordForm
     success_url = reverse_lazy('accounts:password_change_done')
@@ -34,16 +33,16 @@ class ProfileView(TemplateView):
     template_name = "accounts/profile.html"
 
     def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
         try:
             user = CustomUser.objects.filter(username=self.request.user)[0]
-            kwargs["view"] = {
+            ctx["view"] = {
                 "社員番号": user.username,
                 "氏名": user.full_name,
                 "E-Mail": user.email,
-                "室名": user.email,
                 "部署名": user.dept_id,
-                "グループ名": user.sect_id,
-                "室名": user.team_id,
+                "室名": user.sect_id,
+                "グループ名": user.team_id,
                 "職位": user.workers_position_id,
                 "部長": user.is_dept_manager,
                 "室長": user.is_sect_manager,
@@ -64,7 +63,7 @@ class ProfileView(TemplateView):
             }
             
         except:
-            return super().get_context_data()
+            pass
 
-        return super().get_context_data(**kwargs)
+        return ctx
 
