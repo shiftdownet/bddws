@@ -1,0 +1,10 @@
+[
+    {
+        "model": "accounts.TeamMaster",
+        "pk": 0,
+        "fields": {
+            "pms_value": 0,
+            "name": "-"
+        }
+    }
+]

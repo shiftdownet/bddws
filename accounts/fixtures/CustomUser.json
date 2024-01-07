@@ -1,0 +1,12 @@
+[
+    {
+        "model": "accounts.CustomUser",
+        "pk": "0000000",
+        "fields": {
+            "password": "pbkdf2_sha256$720000$2TWIipjsxhMmDD6trfNlUR$ZURuAJbze4R8TvSWQ3PJ0eu4Ilj7jnOWkaZCNmVjN/s=",
+            "is_staff": true,
+            "is_superuser": true,
+            "is_active": true
+        }
+    }
+]
