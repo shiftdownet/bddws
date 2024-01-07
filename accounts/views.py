@@ -21,7 +21,7 @@ class PasswordChange(LoginRequiredMixin, PasswordChangeView):
     template_name = 'accounts/password_change.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs) # 継承元のメソッドCALL
+        context = super().get_context_data(**kwargs)
         context["form_name"] = "password_change"
         return context
 

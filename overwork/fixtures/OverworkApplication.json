@@ -1,0 +1,44 @@
+[
+    {
+        "model": "overwork.overworkapplication",
+        "pk": 1,
+        "fields": {
+            "submitted_by": "0000000",
+            "app_date": "2024-01-07",
+            "is_approved": true,
+            "approved_by": null,
+            "planned_clock_in": "08:30:00",
+            "planned_clock_out": "20:00:00",
+            "planned_overwork": "1.50",
+            "reason": "マヌケは見つかったようだな"
+        }
+    },
+    {
+        "model": "overwork.overworkapplication",
+        "pk": 2,
+        "fields": {
+            "submitted_by": "0000001",
+            "app_date": "2024-01-07",
+            "is_approved": false,
+            "approved_by": null,
+            "planned_clock_in": "08:30:00",
+            "planned_clock_out": "21:00:00",
+            "planned_overwork": "2.50",
+            "reason": "やつを追う前に　言っておくッ！　おれは今　やつのスタンドを　ほんのちょっぴりだが　体験した"
+        }
+    },
+    {
+        "model": "overwork.overworkapplication",
+        "pk": 3,
+        "fields": {
+            "submitted_by": "0000001",
+            "app_date": "2024-01-08",
+            "is_approved": true,
+            "approved_by": null,
+            "planned_clock_in": "08:30:00",
+            "planned_clock_out": "21:00:00",
+            "planned_overwork": "2.50",
+            "reason": "テスト申請C"
+        }
+    }
+]

@@ -1,16 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}User profile{% endblock title %}
+{% block title %}Hello !{% endblock title %}
 
 {% block content %}
-
-{% if not request.user.is_authenticated %}
-
-<script>
-    window.location.href = "/accounts/login"
-</script>
-
-{% else %}
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="True" viewBox="0 0 16 16">
@@ -23,56 +15,59 @@
     </symbol>
 </svg>
 
-<div class="row my-4">
-    <div class="col">
-        <h2 class="">{{ view.社員番号 }} {% if view.氏名 %} - {{ view.氏名 }} - {% endif %}</h2>
-    </div>
-    <div class="col">
-        <form class="" method="post" action="{% url 'accounts:logout' %}">
-            {% csrf_token %}
-            <div class="text-end">
-                <a href="{% url 'accounts:password_change' %}" class="btn btn-warning">Change Password</a>
-                <button type="submit" class="btn btn-secondary">Sign out</button>
-            </div>
-        </form>
-    </div>
-</div>
+<h2 class="my-4">残業申請</h2>
 
 <table class="table table-striped">
     <thead>
         <tr class="table-dark">
-            <th scope="col">項目</th>
-            <th scope="col">値</th>
+            <th scope="col">社員番号</th>
+            <th scope="col">所属</th>
+            <th scope="col">氏名</th>
+            <th scope="col" class="col-4">申請理由</th>
+            <th scope="col">退社予定<br>時刻</th>
+            <th scope="col">申請時間</th>
+            <th scope="col">残業時間<br>/月</th>
+            <th scope="col">36申請</th>
+            <th scope="col">ステータス</th>
         </tr>
     </thead>
     <tbody>
-        {% for key,value in view.items %}
+        {% for user in users %}
         <tr>
-            <th scope="row" style="width:33%;">{{ key }}</th>
-            <td>
-                {% if value == True %}
+            <td scope="row">{{ user.username }}</td>
+            <td scope="row">{{ user.team_id }}</td>
+            <td scope="row">{{ user.full_name }}</td>
+            {% if user.app.0 is null %}
+            <td scope="row">未申請</td>
+            {% else %}
+            <td scope="row">{{ user.app.0.reason }}</td>
+            {% endif %}
+            <td scope="row">{{ user.app.0.planned_clock_out|date:"h:i" }}</td>
+            <td scope="row">{{ user.app.0.planned_overwork }}</td>
+            <td scope="row">未実装</td>
+            <td scope="row">未実装</td>
+            <td scope="row">
+                {% if user.app.0.is_approved == True %}
                 <div style="color:green">
                     <svg class="mx-auto mb-1" width="12" height="12" fill="currentColor">
                         <use xlink:href="#True" />
                     </svg>
-                    Yes
+                    承認済
                 </div>
-                {% elif value == False %}
+                {% elif user.app.0.is_approved == False %}
                 <div style="color:red">
                     <svg class="mx-auto mb-1" width="12" height="12" fill="currentColor">
                         <use xlink:href="#False" />
                     </svg>
-                    No
+                    未承認
                 </div>
                 {% else %}
-                {{ value }}
+
                 {% endif %}
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-
-{% endif %}
 
 {% endblock content %}

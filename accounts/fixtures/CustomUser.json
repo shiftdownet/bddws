@@ -4,9 +4,32 @@
         "pk": "0000000",
         "fields": {
             "password": "pbkdf2_sha256$720000$2TWIipjsxhMmDD6trfNlUR$ZURuAJbze4R8TvSWQ3PJ0eu4Ilj7jnOWkaZCNmVjN/s=",
+            "full_name": "空条 承太郎",
             "is_staff": true,
             "is_superuser": true,
             "is_active": true
+        }
+    },
+    {
+        "model": "accounts.CustomUser",
+        "pk": "0000001",
+        "fields": {
+            "password": "pbkdf2_sha256$720000$2TWIipjsxhMmDD6trfNlUR$ZURuAJbze4R8TvSWQ3PJ0eu4Ilj7jnOWkaZCNmVjN/s=",
+            "full_name": "ジャン・ピエール・ポルナレフ",
+            "is_staff": true,
+            "is_superuser": true,
+            "is_active": true
+        }
+    },
+    {
+        "model": "accounts.CustomUser",
+        "pk": "0000002",
+        "fields": {
+            "password": "pbkdf2_sha256$720000$2TWIipjsxhMmDD6trfNlUR$ZURuAJbze4R8TvSWQ3PJ0eu4Ilj7jnOWkaZCNmVjN/s=",
+            "full_name": "DIO",
+            "is_staff": true,
+            "is_superuser": true,
+            "is_active": false
         }
     }
 ]
