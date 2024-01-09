@@ -4,14 +4,6 @@
 
 {% block content %}
 
-{% if not request.user.is_authenticated %}
-
-<script>
-    window.location.href = "/accounts/login"
-</script>
-
-{% else %}
-
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="True" viewBox="0 0 16 16">
         <path
@@ -72,7 +64,5 @@
         {% endfor %}
     </tbody>
 </table>
-
-{% endif %}
 
 {% endblock content %}
