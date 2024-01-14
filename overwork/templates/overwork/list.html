@@ -4,70 +4,121 @@
 
 {% block content %}
 
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-    <symbol id="True" viewBox="0 0 16 16">
-        <path
-            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-    </symbol>
-    <symbol id="False" viewBox="0 0 16 16">
-        <path
-            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-    </symbol>
-</svg>
+<style>
+    .sunday {
+        color: red;
+    }
 
-<h2 class="my-4">残業申請</h2>
+    .saturday {
+        color: blue;
+    }
 
-<table class="table table-striped">
-    <thead>
-        <tr class="table-dark">
-            <th scope="col">社員番号</th>
-            <th scope="col">所属</th>
-            <th scope="col">氏名</th>
-            <th scope="col" class="col-4">申請理由</th>
-            <th scope="col">退社予定<br>時刻</th>
-            <th scope="col">申請時間</th>
-            <th scope="col">残業時間<br>/月</th>
-            <th scope="col">36申請</th>
-            <th scope="col">ステータス</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td scope="row">{{ user.username }}</td>
-            <td scope="row">{{ user.team_id }}</td>
-            <td scope="row">{{ user.full_name }}</td>
-            {% if user.app.0 is null %}
-            <td scope="row">未申請</td>
-            {% else %}
-            <td scope="row">{{ user.app.0.reason }}</td>
-            {% endif %}
-            <td scope="row">{{ user.app.0.planned_clock_out|date:"h:i" }}</td>
-            <td scope="row">{{ user.app.0.planned_overwork }}</td>
-            <td scope="row">未実装</td>
-            <td scope="row">未実装</td>
-            <td scope="row">
-                {% if user.app.0.is_approved == True %}
-                <div style="color:green">
-                    <svg class="mx-auto mb-1" width="12" height="12" fill="currentColor">
-                        <use xlink:href="#True" />
-                    </svg>
-                    承認済
+    .specifiedDate {
+        color: blue;
+
+    }
+</style>
+
+<h2>残業申請</h2>
+
+<div class="container">
+    <div class="col-md-3 py-4">
+        <form id="list-filter" method="get" action="./">
+            <div class="input-group date mb-3" id="datetimepicker1" data-target-input="nearest">
+                <label for="datetimepicker1" class="pt-2 pr-2">Date</label>
+                <input name="date" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" id="specifiedDate" onchange="goSpecifiedDate()" value="{{date}}" />
+                <div class="input-group-text" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                    <i class="bi bi-calendar"></i>
                 </div>
-                {% elif user.app.0.is_approved == False %}
-                <div style="color:red">
-                    <svg class="mx-auto mb-1" width="12" height="12" fill="currentColor">
-                        <use xlink:href="#False" />
-                    </svg>
-                    未承認
-                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<h4>{{date}}の申請状況</h4>
+
+<form id="overwork_app" method="post" action="">
+    {% csrf_token %}
+    <table class="table table-striped">
+        <thead>
+            <tr class="table-dark">
+                <th scope="col">所属</th>
+                <th scope="col">社員番号</th>
+                <th scope="col">氏名</th>
+                <th scope="col" class="col-4">申請理由</th>
+                <th scope="col">退社予定<br>時刻</th>
+                <th scope="col">申請時間</th>
+                <th scope="col">残業時間<br>/月</th>
+                <th scope="col">36申請</th>
+                <th scope="col">ステータス</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td scope="row">{{ user.team_id }}</td>
+                <td scope="row"><a href="{% url 'accounts:profile' %}?user_id={{ user.username }}">{{ user.username }}</a>
+                </td>
+                <td scope="row"><a href="{% url 'accounts:profile' %}?user_id={{ user.username }}">{{ user.full_name }}</a>
+                </td>
+                {% if yourself == user.username %}
+                <td scope="row">
+                    <input type="text" name="reason" value="{{ user.app.0.reason }}" class="m-0 p-0" style="display: inline-block; width:100%;">
+                </td>
+                {% elif user.app.0 is null %}
+                <td scope="row">申請なし</td>
                 {% else %}
-
+                <td scope="row">{{ user.app.0.reason }}</td>
                 {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                <td scope="row">{{ user.app.0.planned_clock_out|date:"h:i" }}</td>
+                <td scope="row">{{ user.app.0.planned_overwork }}</td>
+                <td scope="row">未実装</td>
+                <td scope="row">未実装</td>
+                <td scope="row">
+                    {% if user.app.0.is_approved == True %}
+                    <div style="color:green">
+                        <i class="bi bi-check-circle-fill mx-auto mb-1" style="font-size: 12px;" fill="currentColor"></i>
+                        承認済
+                    </div>
+                    {% else %}
+                    <div style="color:red">
+                        <i class="bi bi-x-circle-fill mx-auto mb-1" style="font-size: 12px;" fill="currentColor"></i>
+                        未承認
+                    </div>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
 
 {% endblock content %}
+
+{% block foot %}
+<script>
+    $('#list-filter').datepicker({
+        format: "yyyy-mm-dd",
+        maxViewMode: 0,
+        todayBtn: "linked",
+        language: "ja",
+        todayHighlight: true,
+        autoclose: true,
+        beforeShowDay: function (date) {
+            date = moment(date)
+            var classes = ""
+            if (date.format("d") == 0) classes += "sunday ";
+            if (date.format("d") == 6) classes += "saturday ";
+            if (moment("{{date}}").format("YYYYMMDD") == date.format("YYYYMMDD")) classes += "active ";
+            return {
+                classes: classes
+            };
+        },
+    });
+    function goSpecifiedDate() {
+        window.location.href = "?date=" + $("#specifiedDate").val()
+    }
+
+</script>
+{% endblock foot %}

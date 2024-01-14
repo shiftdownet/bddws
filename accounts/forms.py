@@ -4,6 +4,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 from .models import CustomUser
 
+
 class LoginFrom(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -16,7 +17,6 @@ class LoginFrom(AuthenticationForm):
 
     class Meta:
         model = CustomUser
-
 
 
 class SetPasswordForm(PasswordChangeForm):

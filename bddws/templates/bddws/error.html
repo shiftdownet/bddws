@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}エラーが発生しました{% endblock title %}
+
+{% block content %}
+
+
+<h2>{{ error }}</h2>
+
+<p>
+    {%if detail != "" %}
+    {{detail}}
+    {% endif %}
+</p>
+
+{% endblock content %}

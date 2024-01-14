@@ -6,4 +6,3 @@ app_name = "overwork"
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
 ]
-
